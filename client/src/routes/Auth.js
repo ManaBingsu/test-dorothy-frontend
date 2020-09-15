@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from 'axios';
+
+const registerAPI = `https://test-dorothy-backend.herokuapp.com/register`;
 
 const Auth = () => {
     const [email, setEmail] = useState("");
@@ -43,4 +46,16 @@ const Auth = () => {
         </div> 
     )
 }
+
+function Register()
+{
+    let body = {
+        email: Email,
+        password: Password,
+        name: Name
+    }
+    axios.get(registerAPI)
+    .then(response => console.log(response.data))
+}
+
 export default Auth;
