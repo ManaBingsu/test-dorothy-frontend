@@ -1,16 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../_actions/user_action';
 import axios from 'axios';
 
-const registerAPI = `https://test-dorothy-backend.herokuapp.com/register`;
+//const registerAPI = `https://test-dorothy-backend.herokuapp.com/register`;
+const registerAPI = 'http://localhost:3000/register';
 
 const Auth = () => {
+    const dispatch = useDispatch();
+    
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccount] = useState(true);
     const onChange = (event) => {
         const {target: {name, value}} = event;
         if (name === "email"){
             setEmail(value)
+        } else if(name === "name"){
+            setName(value);
         } else if(name === "password"){
             setPassword(value);
         }
@@ -20,6 +28,7 @@ const Auth = () => {
         event.preventDefault();
         if (newAccount) {
             // create account
+            Register()
         } else {
             // log in
         }
@@ -35,6 +44,13 @@ const Auth = () => {
                 onChange={onChange}
                 />
             <input 
+                name="name" 
+                type="text" 
+                placeholder="Name" 
+                required value={name} 
+                onChange={onChange}
+                />
+            <input 
                 name="password"
                 type="password" 
                 placeholder="Password" 
@@ -45,17 +61,23 @@ const Auth = () => {
         </form>
         </div> 
     )
-}
 
-function Register()
-{
-    let body = {
-        email: Email,
-        password: Password,
-        name: Name
+    function Register()
+    {
+        let body = {
+            email: email,
+            password: password,
+            name : name
+        }
+        dispatch(registerUser(body))
+        .then(response => {
+            if (response.payload.success) {
+                alert("Success to sign up")
+            } else {
+                alert("Failed to sign up")
+            }
+        })
     }
-    axios.get(registerAPI)
-    .then(response => console.log(response.data))
 }
 
 export default Auth;
