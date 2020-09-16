@@ -3,9 +3,6 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '../_actions/user_action';
 import axios from 'axios';
 
-//const registerAPI = `https://test-dorothy-backend.herokuapp.com/register`;
-const registerAPI = 'http://localhost:3000/register';
-
 const Auth = () => {
     const dispatch = useDispatch();
     
